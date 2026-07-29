@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "korean-essay-scorer"
+version = "0.1.0"
+description = "Qwen3.5-9B LoRA+ pipeline for Korean argumentative essay scoring"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+
+[project.scripts]
+essay-scorer = "essay_scorer.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["essay_scorer*"]

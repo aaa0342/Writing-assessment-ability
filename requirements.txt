@@ -1,0 +1,10 @@
+# Linux + CUDA training environment (Python 3.11 recommended).
+# Qwen3.5 currently requires the latest Transformers implementation.
+torch>=2.7.0
+transformers @ git+https://github.com/huggingface/transformers.git@main
+accelerate>=1.7.0
+peft>=0.16.0
+huggingface_hub>=0.33.0
+safetensors>=0.5.3
+openai>=1.90.0
+tqdm>=4.67.0
