@@ -186,6 +186,23 @@ def command_verify_merge(args: argparse.Namespace) -> None:
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
+def command_colab_run(args: argparse.Namespace) -> None:
+    from .colab import ColabRunConfig, run_colab_pipeline
+
+    config = ColabRunConfig(
+        train_path=Path(args.train),
+        validation_path=Path(args.validation),
+        artifacts_dir=Path(args.artifacts),
+        model_id=args.model,
+        ratio=args.ratio,
+        epochs=args.epochs,
+        server_timeout_seconds=args.server_timeout,
+        verify_limit=args.verify_limit,
+    )
+    report = run_colab_pipeline(config)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -278,6 +295,22 @@ def build_parser() -> argparse.ArgumentParser:
     verify.add_argument("--model", default="Qwen/Qwen3.5-9B")
     verify.add_argument("--limit", type=int, default=30)
     verify.set_defaults(func=command_verify_merge)
+
+    colab = subparsers.add_parser(
+        "colab-run",
+        help="Run the resumable Colab pipeline from rationale generation to export",
+    )
+    colab.add_argument("--train", default="글쓰기채점능력평가2026_train.jsonl")
+    colab.add_argument(
+        "--validation", default="글쓰기채점능력평가2026_validation.jsonl"
+    )
+    colab.add_argument("--artifacts", default="artifacts")
+    colab.add_argument("--model", default="Qwen/Qwen3.5-9B")
+    colab.add_argument("--ratio", type=float, choices=(8.0, 16.0), default=16.0)
+    colab.add_argument("--epochs", type=int, default=3)
+    colab.add_argument("--server-timeout", type=int, default=3600)
+    colab.add_argument("--verify-limit", type=int, default=10)
+    colab.set_defaults(func=command_colab_run)
     return parser
 
 

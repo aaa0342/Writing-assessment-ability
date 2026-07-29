@@ -1,5 +1,17 @@
 # Qwen3.5-9B LoRA+ 글쓰기 채점 모델
 
+## Google Colab 원클릭 실행
+
+[colab.ipynb를 Colab에서 열기](https://colab.research.google.com/github/aaa0342/Writing-assessment-ability/blob/main/colab.ipynb)
+
+Colab에서 A100 GPU를 선택한 뒤 `런타임 → 모두 실행`을 누르면 설치부터
+rationale 생성, LoRA+ 학습, 검증, 최종 재학습, 병합까지 순서대로 실행합니다.
+완료된 rationale와 체크포인트는 Google Drive의
+`MyDrive/writing-assessment-artifacts`에 저장되어 재실행 시 이어서 처리됩니다.
+현재 BF16 LoRA+ 구현을 보존하므로 A100 40GB 이상의 GPU와 병합 모델까지
+저장할 충분한 Drive 용량이 필요합니다. `HF_TOKEN`과 `HF_REPO_ID`를 Colab
+Secrets에 등록하면 마지막 공개 Hugging Face 업로드도 자동 실행됩니다.
+
 2026 글쓰기 채점 능력 평가의 과제기술서와 Hugging Face URL 제출 규정을
 그대로 반영한 재현 가능한 학습·제출 파이프라인입니다.
 

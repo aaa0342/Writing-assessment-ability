@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from essay_scorer.data import load_examples, round_half_up
+from essay_scorer.colab import choose_vllm_context_length
 from essay_scorer.evaluation import (
     ParsedPrediction,
     compare_prediction_sets,
@@ -25,6 +26,13 @@ from essay_scorer.training import ordinal_score_loss
 
 
 class CoreTests(unittest.TestCase):
+    def test_colab_context_length_by_vram(self) -> None:
+        self.assertEqual(choose_vllm_context_length(80), 32768)
+        self.assertEqual(choose_vllm_context_length(40), 16384)
+        self.assertEqual(choose_vllm_context_length(24), 8192)
+        with self.assertRaises(RuntimeError):
+            choose_vllm_context_length(16)
+
     def test_round_half_up(self) -> None:
         self.assertEqual(round_half_up(1.0), 1)
         self.assertEqual(round_half_up(2.49), 2)
