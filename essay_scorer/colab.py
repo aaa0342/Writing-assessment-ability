@@ -326,6 +326,18 @@ def run_colab_pipeline(config: ColabRunConfig) -> dict[str, object]:
             "BF16 LoRA+ 구현을 보존하므로 A100 40GB 이상이 필요합니다."
         )
     max_model_len = choose_vllm_context_length(memory_gib)
+    try:
+        import torchaudio  # type: ignore[import-not-found]  # noqa: F401
+    except ImportError:
+        pass
+    except RuntimeError as exc:
+        if "compiled with different CUDA versions" in str(exc):
+            raise RuntimeError(
+                "Colab 기본 torchaudio와 PyTorch CUDA 빌드가 충돌합니다. "
+                "`uv pip uninstall --system torchaudio`를 실행한 뒤 다시 "
+                "시도하세요."
+            ) from exc
+        raise
     print(
         f"GPU VRAM={memory_gib:.1f} GiB, vLLM max_model_len={max_model_len}",
         flush=True,

@@ -11,6 +11,9 @@ rationale 생성, LoRA+ 학습, 검증, 최종 재학습, 병합까지 순서대
 현재 BF16 LoRA+ 구현을 보존하므로 A100 40GB 이상의 GPU와 병합 모델까지
 저장할 충분한 Drive 용량이 필요합니다. `HF_TOKEN`과 `HF_REPO_ID`를 Colab
 Secrets에 등록하면 마지막 공개 Hugging Face 업로드도 자동 실행됩니다.
+노트북은 vLLM nightly의 PyTorch CUDA 빌드와 충돌할 수 있는 Colab 기본
+`torchaudio`를 자동 제거합니다. 이 프로젝트는 텍스트만 사용하므로 학습 및
+제출 모델에는 영향을 주지 않습니다.
 
 2026 글쓰기 채점 능력 평가의 과제기술서와 Hugging Face URL 제출 규정을
 그대로 반영한 재현 가능한 학습·제출 파이프라인입니다.
